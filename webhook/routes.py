@@ -2,7 +2,12 @@ import json
 from flask import request, abort
 
 from webhook import app
-from webhook.handlers import handle_message, handle_postback
+from webhook.handlers import handle_message
+
+
+@app.route("/")
+def hello():
+    return "HELLO WORLD"
 
 
 @app.route("/webhook", methods=["POST"])
@@ -11,14 +16,10 @@ def webhook():
     if body["object"] == "page":
         for entry in body["entry"]:
             webhook_event = entry["messaging"][0]
-            print(webhook_event)
             sender_psid = webhook_event["sender"]["id"]
-            print("Sender PSID: ", sender_psid)
 
             if "message" in webhook_event:
                 handle_message(sender_psid, webhook_event["message"])
-            elif "postback" in webhook_event:
-                handle_postback(sender_psid, webhook_event["postback"])
 
         return "EVENT_RECIEVED"
     else:
