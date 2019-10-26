@@ -10,6 +10,25 @@ def hello():
     return "Hello World"
 
 
+@app.route("/conversation/prices/<animal>")
+def get_initial_price(animal):
+    animals = {
+        "cat": 100,
+        "dog": 200,
+        "fish": 300,
+        "bird": 400,
+        "elephant": 500,
+        "ostrich": 600,
+        "hippo": 700,
+        "tiger": 800,
+        "monkey": 900,
+        "walrus": 1000,
+        "racoon": 1100,
+    }
+    response = {"price": animals[animal.lower()]}
+    return json.dumps(response)
+
+
 @app.route("/conversation/webhook", methods=["POST"])
 def handle_conversation():
     body = request.get_json()
