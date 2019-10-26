@@ -31,12 +31,15 @@ def barter():
         "walrus": 1000,
         "racoon": 5000,
     }
-    body = requests.get_json()
+    body = request.get_json()
 
     text = body["message"]
     price = body["price"]
     animal = body["animal"]
     person_id = body["id"]
+
+    with open("transcript.txt", "a") as f:
+        f.write(text + "\n")
 
     response = {}
     if price >= animals[animal]:
