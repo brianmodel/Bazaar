@@ -13,8 +13,10 @@ def hello():
 @app.route("/conversation/webhook", methods=["POST"])
 def handle_conversation():
     body = request.get_json()
-    print(body)
-    return "Recieved"
+    headers = request.headers
+    qs = request.args
+    everything = {"payload": body, "headers": headers, "queryString": qs}
+    return json.dumps(body)
 
 
 @app.route("/webhook", methods=["POST"])
