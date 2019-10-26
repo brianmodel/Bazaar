@@ -4,7 +4,6 @@ import os
 
 from app import app
 from app.handlers import handle_message
-from app.firebase import add_transcript
 
 
 @app.route("/")
@@ -12,7 +11,7 @@ def hello():
     return "Hello World"
 
 
-@app.route("conversation/confirm")
+@app.route("/conversation/confirm")
 def confirm_order():
     pass
 
