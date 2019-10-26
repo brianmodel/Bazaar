@@ -1,13 +1,51 @@
 import json
 from flask import request, abort
+import os
 
 from app import app
 from app.handlers import handle_message
+from app.firebase import add_transcript
 
 
 @app.route("/")
 def hello():
     return "Hello World"
+
+
+@app.route("conversation/confirm")
+def confirm_order():
+    pass
+
+
+@app.route("/conversation/barter", methods=["POST"])
+def barter():
+    animals = {
+        "cat": 100,
+        "dog": 200,
+        "fish": 300,
+        "bird": 400,
+        "elephant": 500,
+        "ostrich": 600,
+        "hippo": 700,
+        "tiger": 800,
+        "monkey": 900,
+        "walrus": 1000,
+        "racoon": 5000,
+    }
+    body = requests.get_json()
+
+    text = body["message"]
+    price = body["price"]
+    animal = body["animal"]
+    person_id = body["id"]
+
+    response = {}
+    if price >= animals[animal]:
+        response["valid"] = "true"
+    else:
+        response["valid"] = "false"
+        response["price"] = animals[animal]
+    return response
 
 
 @app.route("/conversation/prices/<animal>")
@@ -23,9 +61,9 @@ def get_initial_price(animal):
         "tiger": 800,
         "monkey": 900,
         "walrus": 1000,
-        "racoon": 1100,
+        "racoon": 5000,
     }
-    response = {"price": animals[animal.lower()]}
+    response = {"price": animals[animal.lower()] * 1.2}
     return json.dumps(response)
 
 
