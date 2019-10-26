@@ -1,7 +1,7 @@
 import json
 import requests
 
-from webhook.settings import SETTINGS
+from app.settings import SETTINGS
 
 
 def handle_message(sender_psid, received_message):

@@ -1,8 +1,8 @@
 import json
 from flask import request, abort
 
-from webhook import app
-from webhook.handlers import handle_message
+from app import app
+from app.handlers import handle_message
 
 
 @app.route("/")
