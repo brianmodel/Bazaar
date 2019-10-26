@@ -20,5 +20,5 @@ def call_send_api(sender_psid, response):
     request_body = {"recipient": {"id": sender_psid}, "message": response}
     uri = "https://graph.facebook.com/v2.6/me/messages"
     params = {"access_token": SETTINGS["PAGE_ACCESS_TOKEN"]}
-    response = request.post(uri, data=request_body, params=params)
+    response = requests.post(uri, data=request_body, params=params)
     print(response)
