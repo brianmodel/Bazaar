@@ -5,9 +5,11 @@ from app import app
 from app.handlers import handle_message
 
 
-@app.route("/")
-def hello():
-    return "HELLO WORLD"
+@app.route("/conversation/webhook", methods=["POST"])
+def handle_conversation():
+    body = request.get_json()
+    print(body)
+    return "Recieved"
 
 
 @app.route("/webhook", methods=["POST"])
