@@ -29,7 +29,7 @@ def barter():
         "tiger": 800,
         "monkey": 900,
         "walrus": 1000,
-        "racoon": 5000,
+        "raccoon": 5000,
     }
     body = request.get_json()
 
@@ -63,7 +63,7 @@ def get_initial_price(animal):
         "tiger": 800,
         "monkey": 900,
         "walrus": 1000,
-        "racoon": 5000,
+        "raccoon": 5000,
     }
     response = {"price": animals[animal.lower()] * 1.2}
     return json.dumps(response)
