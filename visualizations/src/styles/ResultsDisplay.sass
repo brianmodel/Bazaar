@@ -1,0 +1,56 @@
+@import main
+
+#resultsDisplay
+    text-align: center
+    display: inline-block
+    max-width: 100%
+    max-height: 90%
+#resultsDisplay #resultsHolder
+    width: 100%
+    overflow-x: scroll
+    margin-bottom: 20px
+#resultsDisplay table
+    font-size: 1.5em
+#resultsDisplay table thead tr th
+    border-top: none
+    border-left: none
+    border-right: none
+    border-bottom-width: 3px
+    border-bottom-color: $blackish-grey
+    min-width: 200px
+    cursor: pointer
+    vertical-align: middle
+    line-height: 13px
+#resultsDisplay table thead tr th .output-name
+    float: left
+    font-size: 0.75em
+    margin-right: 30px
+    color: $grey
+#resultsDisplay table tbody
+    overflow-y: auto
+
+
+#resultsDisplay .white-column
+    background-color: white
+#resultsDisplay .grey-column
+    background-color: $whitish-grey
+#resultsDisplay .white-header
+    font-weight: 500
+#resultsDisplay .grey-header
+    font-weight: 800
+
+#resultsDisplay .record-count-holder
+    text-align: left
+    padding-left: 30px
+#resultsDisplay .record-count-holder h4
+    font-size: 1.5em
+
+#resultsDisplay .result-options 
+    height: 65px
+    background-color: #d8d8d8
+    text-align: right
+    vertical-align: middle
+    padding: 15px 20px
+#resultsDisplay .view-query
+    @extend %slight-shadow
+    color: $depot-orange
