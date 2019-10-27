@@ -4,6 +4,7 @@ import os
 
 from app import app
 from app.handlers import handle_message
+from tinydb import TinyDB, Query
 
 
 @app.route("/")
@@ -23,11 +24,20 @@ def update_analysis():
     import app.analysis.transcript_analysis as ta
 
     ta.update_analyisis()
+    return "Success"
 
 
-@app.route("/conversation/confirm")
+@app.route("/conversation/confirm", methods=["POST"])
 def confirm_order():
-    pass
+    body = request.get_json()
+    final_price = body["price"]
+    animal = body["animal"]
+    return "Success"
+
+@app.route('/ranges')
+def get_ranges():
+    db = TinyDB(os.getcwd() + "/app/db.json")
+    return json.dumps(db.all())
 
 
 @app.route("/conversation/barter/", methods=["POST"])
@@ -48,9 +58,29 @@ def barter():
     body = request.get_json()
 
     text = body["message"]
-    price = body["price"]
+    try:
+        price = int(body["price"])
+    except Exception:
+        price = 300
     animal = body["animal"]
     person_id = body["id"]
+
+    db = TinyDB(os.getcwd() + "/app/db.json")
+    Animal = Query()
+    result = db.search(Animal.name == animal)
+    if len(result) > 0:
+        result = result[0]
+        price_range = result["range"]
+        min_price, max_price = price_range["min"], price_range["max"]
+        if price < min_price:
+            min_price = price
+        if price > max_price:
+            max_price = price
+        db.update({"range": {"min": min_price, "max": max_price}}, Animal.name == animal)
+    else:
+        db.insert({"name": animal, "range": {"min": price, "max": price}})
+    print(db.all())
+
     with open(os.getcwd() + "/app/analysis/transcript.json", "r") as f:
         transcript = json.loads(f.read())
     if animal not in transcript:
