@@ -3,6 +3,7 @@ import tensorflow as tf
 import tensorflow_hub as hub
 import numpy as np
 import json
+import os
 
 def update_analyisis():
     module_url = "https://tfhub.dev/google/universal-sentence-encoder/2" #@param ["https://tfhub.dev/google/universal-sentence-encoder/2", "https://tfhub.dev/google/universal-sentence-encoder-large/3"]
@@ -47,14 +48,14 @@ def update_analyisis():
                 max_score = max(max_score, np.inner(embedding, attitude_embeddings))
             return max_score
 
-        def haggle_score(text):
-            print("ERBGEBGEFSG", attitude_score(session.run(embed([text]))[0], haggle_embeddings))
+        # def haggle_score(text):
+        #     print("ERBGEBGEFSG", attitude_score(session.run(embed([text]))[0], haggle_embeddings))
 
 
         objects = {}
         embedded_objects = {}
         scores = {}
-        with open('test_transcript.json', 'r') as fp:
+        with open(os.getcwd() + '/app/transcript.json', 'r') as fp:
             objects = json.load(fp)
         
         print(objects)
@@ -67,26 +68,8 @@ def update_analyisis():
             phrase_scores = [attitude_score(embedding, haggle_embeddings) for embedding in embedded_objects[obj]]
             score = sum(phrase_scores) / len(phrase_scores)
             suggestion = "lower the price" if score > .5 else "raise the price"
-            scores[obj] = {"sugesstion" : suggestion, "haggle_score" : score}
+            scores[obj] = {"sugestion" : suggestion, "haggle_score" : score}
         
         print(scores)
         with open('scores.json', 'w') as fp:
             json.dump(scores, fp)
-        
-
-        # test_data = ["That's too low!", 
-        #             "I've got 45, will that work?", 
-        #             "Sure, that sounds good",
-        #             "I've had enough of this buffoonery",
-        #             "Actually, that's a fair price",
-        #             "Sounds good, where do I sign",
-        #             "What about the dog food"
-        #             "What time should I pick up?"]
-        
-        # test_embedded = session.run(embed(test_data))
-        
-        # haggle_score("There's no way I'm paying that")
-        # for i, embedding in enumerate(test_embedded):
-        #     print("SENTENCE: ", test_data[i], " HAGGLE SCORE: ", attitude_score(embedding, haggle_embeddings))
-
-update_analyisis()
