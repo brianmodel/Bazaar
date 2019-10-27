@@ -1,1 +1,36 @@
-{"walrus": ["cool message", "next message", "next message", "next message", "next message", "next message", "next message"], "elephant": ["too much, can only do $650", "I can only do $550"], "tiger": ["next message", "next message", "next message", "next message", "next message", "next message", "next message", "next message", "next message"]}
+{
+    "dog": [
+        "I can do $200"
+    ],
+    "cat": [
+        "Best I can do it $50"
+    ],
+    "fish": [
+        "$300 sounds good"
+    ],
+    "bird": [
+        "How about $200"
+    ],
+    "elephant": [
+        "too much, can only do $650",
+        "I can only do $550"
+    ],
+    "ostrich": [
+        "$600 is perfect"
+    ],
+    "hippo": [
+        "How does $400 sound?"
+    ],
+    "tiger": [
+        "I can go to $1000"
+    ],
+    "alligator": [
+        "how does $950 sound?"
+    ],
+    "walrus": [
+        "The highest I can go is $700"
+    ],
+    "raccoon": [
+        "$1200 is right in my price range"
+    ]
+}

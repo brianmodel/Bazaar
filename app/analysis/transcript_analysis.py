@@ -73,7 +73,25 @@ def update_analyisis():
             ]
             score = sum(phrase_scores) / len(phrase_scores)
             suggestion = "lower the price" if score > 0.5 else "raise the price"
-            scores[obj] = {"sugestion": suggestion, "haggle_score": score}
+            scores[obj] = {"sugestion": suggestion, "haggle_score": score * 100}
+
+        animals = {
+            "cat": "Catty Cabbage",
+            "dog": "Doggy Daikons",
+            "fish": "Fishy Flaxseeds",
+            "bird": "Birdy Broad Beans",
+            "elephant": "Elephanty Endives",
+            "ostrich": "Ostrichy Oats",
+            "hippo": "Hippo Honeydew",
+            "tiger": "Tigery Turnips",
+            "alligator": "Alligator Aubergine",
+            "walrus": "Walrus Watercress",
+            "raccoon": "Raccoon Rhubarb",
+        }
+
+        for animal in scores.keys():
+            scores[animals[animal]] = scores[animal]
+            del scores[animal]
 
         print(scores)
         with open(os.getcwd() + "/app/analysis/scores.json", "w") as fp:

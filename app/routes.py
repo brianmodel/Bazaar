@@ -65,7 +65,7 @@ def confirm_order():
         "tiger": (800, "Tigery Turnips"),
         "alligator": (900, "Alligator Aubergine"),
         "walrus": (1000, "Walrus Watercress"),
-        "raccoon": (5000, "Raccoon Rhubarb"),
+        "raccoon": (1200, "Raccoon Rhubarb"),
     }
 
     body = request.get_json()
