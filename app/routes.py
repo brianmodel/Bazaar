@@ -80,7 +80,7 @@ def confirm_order():
         amount=final_price,
     )
 
-    return "Success"
+    return "Order confirmed"
 
 
 @app.route("/ranges")
