@@ -88,11 +88,10 @@ def update_analyisis():
             "walrus": "Walrus Watercress",
             "raccoon": "Raccoon Rhubarb",
         }
-
+        new_scores = {}
         for animal in scores.keys():
-            scores[animals[animal]] = scores[animal]
-            del scores[animal]
-
+            new_scores[animals[animal]] = scores[animal]
+        scores = new_scores
         print(scores)
         with open(os.getcwd() + "/app/analysis/scores.json", "w") as fp:
             json.dump(scores, fp)
