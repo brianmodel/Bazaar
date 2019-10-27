@@ -30,7 +30,7 @@ def get_orders():
             "id": order_id,
             "dateCreated": date_created,
             "customerName": customer,
-            "amountPaid": amount_paid,
+            "amountPaid": float(amount_paid),
             "item": item,
         }
         response.append(order_entry)
