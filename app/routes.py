@@ -118,7 +118,7 @@ def barter():
 
     db = TinyDB(os.getcwd() + "/app/db.json")
     Animal = Query()
-    result = db.search(Animal.x == full_name)
+    result = db.search(Animal.label == full_name)
     if len(result) > 0:
         result = result[0]
         price_range = result["y"]
@@ -127,9 +127,9 @@ def barter():
             min_price = price
         if price > max_price:
             max_price = price
-        db.update({"y": [min_price, max_price]}, Animal.x == full_name)
+        db.update({"y": [min_price, max_price]}, Animal.label == full_name)
     else:
-        db.insert({"x": full_name, "y": [price, price]})
+        db.insert({"label": full_name, "y": [price, price]})
 
     with open(os.getcwd() + "/app/analysis/transcript.json", "r") as f:
         transcript = json.loads(f.read())
@@ -147,6 +147,23 @@ def barter():
         response["valid"] = "false"
         response["price"] = animals[animal]
     return json.dumps(response)
+
+
+# @app.route('/recommended')
+# def get_recommendation():
+#     {
+#         "Catty Cabbage": ["Doggy Daikons", "Birdy Broad Beans"],
+#         "Doggy Daikons": ["Catty Cabbage", "Fishy Flaxseeds"],
+#         "Fishy Flaxseeds": ["Birdy Broad Beans", "Doggy Daikons"],
+#         "Birdy Broad Beans": ["Ostrichy Oats", "Raccoon Rhubarb"],
+#         "Elephanty Endives": ["Hippo Honeydew", "Walrus Watercress"],
+#         "Ostrichy Oats": ["Birdy Broad Beans", "Fishy Flaxseeds"],
+#         "Hippo Honeydew": ["Elephanty Endives", "Alligator Aubergine"],
+#         "Tigery Turnips": ["Alligator Aubergine", "Raccoon Rhubarb"],
+#         "Alligator Aubergine": [],
+#         "Walrus Watercress": [],
+#         "Raccoon Rhubarb": []
+#     }
 
 
 @app.route("/conversation/prices/<animal>")
