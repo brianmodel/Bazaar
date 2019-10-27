@@ -2,14 +2,30 @@ import json
 from flask import request, abort
 import os
 
+
 from app import app
 from app.handlers import handle_message
+from app.ncr.order_api_tools import create_order, get_all_orders, get_order
 from tinydb import TinyDB, Query
 
 
 @app.route("/")
 def hello():
     return "Hello World"
+
+
+@app.route("/orders")
+def get_orders():
+    orders = get_all_orders()
+    for order in orders["orders"]:
+        order_id = order["id"]
+        date_created = order["dateCreated"]
+        customer = order["customer"]
+
+        full_order = get_order(order_id)
+        amount_paid = full_order["payments"][0]["amount"]
+        print(amount_paid)
+    return "success"
 
 
 @app.route("/analysis")
@@ -29,12 +45,36 @@ def update_analysis():
 
 @app.route("/conversation/confirm", methods=["POST"])
 def confirm_order():
+    animals = {
+        "cat": (100, "Catty Cabbage"),
+        "dog": (200, "Doggy Daikons"),
+        "fish": (300, "Fishy Flaxseeds"),
+        "bird": (400, "Birdy Broad Beans"),
+        "elephant": (500, "Elephanty Endives"),
+        "ostrich": (600, "Ostrichy Oats"),
+        "hippo": (700, "Hippo Honeydew"),
+        "tiger": (800, "Tigery Turnips"),
+        "alligator": (900, "Alligator Aubergine"),
+        "walrus": (1000, "Walrus Watercress"),
+        "raccoon": (5000, "Raccoon Rhubarb"),
+    }
+
     body = request.get_json()
     final_price = body["price"]
     animal = body["animal"]
+    actual_price, full_name = animals[animal]
+    create_order(
+        type=full_name,
+        name="Ishan Arya",
+        phone="1234567890",
+        unitPrice=actual_price,
+        amount=final_price,
+    )
+
     return "Success"
 
-@app.route('/ranges')
+
+@app.route("/ranges")
 def get_ranges():
     db = TinyDB(os.getcwd() + "/app/db.json")
     return json.dumps(db.all())
@@ -43,17 +83,17 @@ def get_ranges():
 @app.route("/conversation/barter/", methods=["POST"])
 def barter():
     animals = {
-        "cat": 100,
-        "dog": 200,
-        "fish": 300,
-        "bird": 400,
-        "elephant": 500,
-        "ostrich": 600,
-        "hippo": 700,
-        "tiger": 800,
-        "monkey": 900,
-        "walrus": 1000,
-        "raccoon": 5000,
+        "cat": (100, "Catty Cabbage"),
+        "dog": (200, "Doggy Daikons"),
+        "fish": (300, "Fishy Flaxseeds"),
+        "bird": (400, "Birdy Broad Beans"),
+        "elephant": (500, "Elephanty Endives"),
+        "ostrich": (600, "Ostrichy Oats"),
+        "hippo": (700, "Hippo Honeydew"),
+        "tiger": (800, "Tigery Turnips"),
+        "alligator": (900, "Alligator Aubergine"),
+        "walrus": (1000, "Walrus Watercress"),
+        "raccoon": (5000, "Raccoon Rhubarb"),
     }
     body = request.get_json()
 
@@ -65,20 +105,22 @@ def barter():
     animal = body["animal"]
     person_id = body["id"]
 
+    actual_price, full_name = animals[animal]
+
     db = TinyDB(os.getcwd() + "/app/db.json")
     Animal = Query()
-    result = db.search(Animal.name == animal)
+    result = db.search(Animal.x == full_name)
     if len(result) > 0:
         result = result[0]
-        price_range = result["range"]
-        min_price, max_price = price_range["min"], price_range["max"]
+        price_range = result["y"]
+        min_price, max_price = price_range[0], price_range[1]
         if price < min_price:
             min_price = price
         if price > max_price:
             max_price = price
-        db.update({"range": {"min": min_price, "max": max_price}}, Animal.name == animal)
+        db.update({"y": [min_price, max_price]}, Animal.x == full_name)
     else:
-        db.insert({"name": animal, "range": {"min": price, "max": price}})
+        db.insert({"x": full_name, "y": [price, price]})
     print(db.all())
 
     with open(os.getcwd() + "/app/analysis/transcript.json", "r") as f:
@@ -91,7 +133,7 @@ def barter():
         json.dump(transcript, f)
 
     response = {}
-    if price >= animals[animal]:
+    if price >= animals[animal][0]:
         response["valid"] = "true"
     else:
         response["valid"] = "false"

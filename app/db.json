@@ -1,1 +1,1 @@
-{"_default": {"1": {"name": "walrus", "range": {"min": 700, "max": 1000}}, "2": {"name": "tiger", "range": {"min": 200, "max": 1000}}}}
+{"_default": {"1": {"x": "Tigery Turnips", "y": [200, 1000]}, "2": {"x": "Walrus Watercress", "y": [100, 2000]}}}
