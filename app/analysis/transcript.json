@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "dog": [
         "I can do $200"
@@ -34,3 +35,6 @@
         "$1200 is right in my price range"
     ]
 }
+=======
+{"walrus": ["cool message", "next message", "next message", "next message", "next message", "next message", "next message", "Thats way to much", "Thats way to much"], "elephant": ["too much, can only do $650", "I can only do $550", "Thats way to much", "Thats way to much"], "tiger": ["next message", "next message", "next message", "next message", "next message", "next message", "next message", "next message", "next message", "Thats way to much", "Thats way to much"], "cat": ["Thats way to much", "Thats way to much"], "dog": ["Thats way to much", "Thats way to much"], "fish": ["Thats way to much", "Thats way to much"], "bird": ["Thats way to much", "Thats way to much"], "ostrich": ["Thats way to much", "Thats way to much"], "hippo": ["Thats way to much", "Thats way to much"], "alligator": ["Thats way to much", "Thats way to much"], "raccoon": ["Thats way to much", "Thats way to much"]}
+>>>>>>> 6852db4ef88044a5bcd808dd328214cb4a5ff270
