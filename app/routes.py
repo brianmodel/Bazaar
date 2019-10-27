@@ -5,6 +5,7 @@ import os
 
 from app import app
 from app.handlers import handle_message
+from app.settings import SETTINGS
 from app.ncr.order_api_tools import create_order, get_all_orders, get_order
 from tinydb import TinyDB, Query
 
@@ -71,10 +72,16 @@ def confirm_order():
     body = request.get_json()
     final_price = body["price"]
     animal = body["animal"]
+    customer_id = body['id']
     actual_price, full_name = animals[animal]
+
+    resp = requests.get('https://graph.facebook.com/v4.0/{}?access_token={}'.format(customer_id, SETTINGS['PAGE_ACCESS_TOKEN']))
+    resp = resp.json()
+
+    name = resp.get('first_name', "") + resp.get('last_name', "")
     create_order(
         type=full_name,
-        name="Ishan Arya",
+        name= name,
         phone="1234567890",
         unitPrice=actual_price,
         amount=final_price,
