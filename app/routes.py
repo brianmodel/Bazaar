@@ -31,7 +31,7 @@ def get_orders():
             "id": order_id,
             "dateCreated": date_created,
             "customerName": customer,
-            "amountPaid": float(amount_paid),
+            "amountPaid": amount_paid,
             "item": item,
         }
         response.append(order_entry)
@@ -84,7 +84,7 @@ def confirm_order():
         name= name,
         phone="1234567890",
         unitPrice=actual_price,
-        amount=final_price,
+        amount=float(final_price),
     )
 
     return "Order confirmed"
@@ -156,21 +156,21 @@ def barter():
     return json.dumps(response)
 
 
-# @app.route('/recommended')
-# def get_recommendation():
-#     {
-#         "Catty Cabbage": ["Doggy Daikons", "Birdy Broad Beans"],
-#         "Doggy Daikons": ["Catty Cabbage", "Fishy Flaxseeds"],
-#         "Fishy Flaxseeds": ["Birdy Broad Beans", "Doggy Daikons"],
-#         "Birdy Broad Beans": ["Ostrichy Oats", "Raccoon Rhubarb"],
-#         "Elephanty Endives": ["Hippo Honeydew", "Walrus Watercress"],
-#         "Ostrichy Oats": ["Birdy Broad Beans", "Fishy Flaxseeds"],
-#         "Hippo Honeydew": ["Elephanty Endives", "Alligator Aubergine"],
-#         "Tigery Turnips": ["Alligator Aubergine", "Raccoon Rhubarb"],
-#         "Alligator Aubergine": [],
-#         "Walrus Watercress": [],
-#         "Raccoon Rhubarb": []
-#     }
+@app.route('/recommended')
+def get_recommendation():
+    {
+        "Catty Cabbage": ["Doggy Daikons", "Birdy Broad Beans"],
+        "Doggy Daikons": ["Catty Cabbage", "Fishy Flaxseeds"],
+        "Fishy Flaxseeds": ["Birdy Broad Beans", "Doggy Daikons"],
+        "Birdy Broad Beans": ["Ostrichy Oats", "Raccoon Rhubarb"],
+        "Elephanty Endives": ["Hippo Honeydew", "Walrus Watercress"],
+        "Ostrichy Oats": ["Birdy Broad Beans", "Fishy Flaxseeds"],
+        "Hippo Honeydew": ["Elephanty Endives", "Alligator Aubergine"],
+        "Tigery Turnips": ["Alligator Aubergine", "Raccoon Rhubarb"],
+        "Alligator Aubergine": [],
+        "Walrus Watercress": [],
+        "Raccoon Rhubarb": []
+    }
 
 
 @app.route("/conversation/prices/<animal>")
