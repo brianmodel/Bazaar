@@ -2,6 +2,7 @@ import json
 from flask import request, abort
 import os
 import requests
+import random
 
 from app import app
 from app.handlers import handle_message
@@ -156,21 +157,38 @@ def barter():
     return json.dumps(response)
 
 
-@app.route('/recommended')
-def get_recommendation():
-    {
-        "Catty Cabbage": ["Doggy Daikons", "Birdy Broad Beans"],
-        "Doggy Daikons": ["Catty Cabbage", "Fishy Flaxseeds"],
-        "Fishy Flaxseeds": ["Birdy Broad Beans", "Doggy Daikons"],
-        "Birdy Broad Beans": ["Ostrichy Oats", "Raccoon Rhubarb"],
-        "Elephanty Endives": ["Hippo Honeydew", "Walrus Watercress"],
-        "Ostrichy Oats": ["Birdy Broad Beans", "Fishy Flaxseeds"],
-        "Hippo Honeydew": ["Elephanty Endives", "Alligator Aubergine"],
-        "Tigery Turnips": ["Alligator Aubergine", "Raccoon Rhubarb"],
-        "Alligator Aubergine": [],
-        "Walrus Watercress": [],
-        "Raccoon Rhubarb": []
-    }
+# @app.route('/recommended/<animal>')
+# def get_recommendation(animal):
+#     animals = {
+#         "cat": "Catty Cabbage",
+#         "dog": "Doggy Daikons",
+#         "fish": "Fishy Flaxseeds",
+#         "bird": "Birdy Broad Beans",
+#         "elephant": "Elephanty Endives",
+#         "ostrich": "Ostrichy Oats",
+#         "hippo": "Hippo Honeydew",
+#         "tiger": "Tigery Turnips",
+#         "alligator": "Alligator Aubergine",
+#         "walrus": "Walrus Watercress",
+#         "raccoon": "Raccoon Rhubarb",
+#     }
+
+#     similar = {
+#         "Catty Cabbage": ["Doggy Daikons", "Birdy Broad Beans"],
+#         "Doggy Daikons": ["Catty Cabbage", "Fishy Flaxseeds"],
+#         "Fishy Flaxseeds": ["Birdy Broad Beans", "Doggy Daikons"],
+#         "Birdy Broad Beans": ["Ostrichy Oats", "Raccoon Rhubarb"],
+#         "Elephanty Endives": ["Hippo Honeydew", "Walrus Watercress"],
+#         "Ostrichy Oats": ["Birdy Broad Beans", "Fishy Flaxseeds"],
+#         "Hippo Honeydew": ["Elephanty Endives", "Alligator Aubergine"],
+#         "Tigery Turnips": ["Alligator Aubergine", "Raccoon Rhubarb"],
+#         "Alligator Aubergine": ["Hippo Honeydew", 'Walrus Watercress'],
+#         "Walrus Watercress": ["Fishy Flaxseeds", "Alligator Aubergine"],
+#         "Raccoon Rhubarb": ["Catty Cabbage", "Doggy Daikons"]
+#     }
+#     sim = similar[animals[animal]]
+#     resp = {'recommendation': sim[random.randint(0, len(sim)-1)]}
+#     return json.dumps(resp)
 
 
 @app.route("/conversation/prices/<animal>")
@@ -186,7 +204,7 @@ def get_initial_price(animal):
         "tiger": 800,
         "monkey": 900,
         "walrus": 1000,
-        "raccoon": 5000,
+        "raccoon": 1200,
     }
     response = {"price": animals[animal.lower()] * 1.2}
     return json.dumps(response)
