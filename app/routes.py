@@ -16,7 +16,7 @@ def confirm_order():
     pass
 
 
-@app.route("/conversation/barter", methods=["POST"])
+@app.route("/conversation/barter/", methods=["POST"])
 def barter():
     animals = {
         "cat": 100,
@@ -37,7 +37,6 @@ def barter():
     price = body["price"]
     animal = body["animal"]
     person_id = body["id"]
-
     with open(os.getcwd() + "/app/transcript.json", "r") as f:
         transcript = json.loads(f.read())
     if animal not in transcript:
