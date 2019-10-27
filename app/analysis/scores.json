@@ -1,1 +1,46 @@
-{"Doggy Daikons": {"sugestion": "lower the price", "haggle_score": 64.71388339996338}, "Catty Cabbage": {"sugestion": "lower the price", "haggle_score": 50.8490264415741}, "Fishy Flaxseeds": {"sugestion": "lower the price", "haggle_score": 61.06621026992798}, "Birdy Broad Beans": {"sugestion": "lower the price", "haggle_score": 57.88498520851135}, "Elephanty Endives": {"sugestion": "lower the price", "haggle_score": 71.45281434059143}, "Ostrichy Oats": {"sugestion": "raise the price", "haggle_score": 47.95781672000885}, "Hippo Honeydew": {"sugestion": "lower the price", "haggle_score": 58.92479419708252}, "Tigery Turnips": {"sugestion": "lower the price", "haggle_score": 55.95009922981262}, "Alligator Aubergine": {"sugestion": "raise the price", "haggle_score": 36.24330759048462}, "Walrus Watercress": {"sugestion": "lower the price", "haggle_score": 59.004420042037964}, "Raccoon Rhubarb": {"sugestion": "raise the price", "haggle_score": 49.57554638385773}}
+{
+    "Doggy Daikons": {
+        "suggestion": "lower the price",
+        "haggle_score": 64.71388339996338
+    },
+    "Catty Cabbage": {
+        "suggestion": "lower the price",
+        "haggle_score": 50.8490264415741
+    },
+    "Fishy Flaxseeds": {
+        "suggestion": "lower the price",
+        "haggle_score": 61.06621026992798
+    },
+    "Birdy Broad Beans": {
+        "suggestion": "lower the price",
+        "haggle_score": 57.88498520851135
+    },
+    "Elephanty Endives": {
+        "suggestion": "lower the price",
+        "haggle_score": 71.45281434059143
+    },
+    "Ostrichy Oats": {
+        "suggestion": "raise the price",
+        "haggle_score": 47.95781672000885
+    },
+    "Hippo Honeydew": {
+        "suggestion": "lower the price",
+        "haggle_score": 58.92479419708252
+    },
+    "Tigery Turnips": {
+        "suggestion": "lower the price",
+        "haggle_score": 55.95009922981262
+    },
+    "Alligator Aubergine": {
+        "suggestion": "raise the price",
+        "haggle_score": 36.24330759048462
+    },
+    "Walrus Watercress": {
+        "suggestion": "lower the price",
+        "haggle_score": 59.004420042037964
+    },
+    "Raccoon Rhubarb": {
+        "suggestion": "raise the price",
+        "haggle_score": 49.57554638385773
+    }
+}

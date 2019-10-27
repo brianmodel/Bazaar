@@ -73,7 +73,7 @@ def update_analyisis():
             ]
             score = sum(phrase_scores) / len(phrase_scores)
             suggestion = "lower the price" if score > 0.5 else "raise the price"
-            scores[obj] = {"sugestion": suggestion, "haggle_score": score * 100}
+            scores[obj] = {"suggestion": suggestion, "haggle_score": score * 100}
 
         animals = {
             "cat": "Catty Cabbage",
