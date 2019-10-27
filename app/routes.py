@@ -78,7 +78,7 @@ def confirm_order():
     resp = requests.get('https://graph.facebook.com/v4.0/{}?access_token={}'.format(customer_id, SETTINGS['PAGE_ACCESS_TOKEN']))
     resp = resp.json()
 
-    name = resp.get('first_name', "") + resp.get('last_name', "")
+    name = resp.get('first_name', "") + ' ' + resp.get('last_name', "")
     create_order(
         type=full_name,
         name= name,
