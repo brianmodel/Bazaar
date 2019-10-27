@@ -1,7 +1,7 @@
 import json
 from flask import request, abort
 import os
-
+import requests
 
 from app import app
 from app.handlers import handle_message
