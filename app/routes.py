@@ -11,6 +11,20 @@ def hello():
     return "Hello World"
 
 
+@app.route("/analysis")
+def analysis():
+    with open(os.getcwd() + "/app/analysis/scores.json", "r") as f:
+        scores = json.load(f)
+    return json.dumps(scores)
+
+
+@app.route("/analysis/update")
+def update_analysis():
+    import app.analysis.transcript_analysis as ta
+
+    ta.update_analyisis()
+
+
 @app.route("/conversation/confirm")
 def confirm_order():
     pass
@@ -37,13 +51,13 @@ def barter():
     price = body["price"]
     animal = body["animal"]
     person_id = body["id"]
-    with open(os.getcwd() + "/app/transcript.json", "r") as f:
+    with open(os.getcwd() + "/app/analysis/transcript.json", "r") as f:
         transcript = json.loads(f.read())
     if animal not in transcript:
         transcript[animal] = []
     transcript[animal].append(text)
 
-    with open(os.getcwd() + "/app/transcript.json", "w") as f:
+    with open(os.getcwd() + "/app/analysis/transcript.json", "w") as f:
         json.dump(transcript, f)
 
     response = {}
