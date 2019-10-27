@@ -2,38 +2,91 @@
 import tensorflow as tf
 import tensorflow_hub as hub
 import numpy as np
-module_url = "https://tfhub.dev/google/universal-sentence-encoder/2" #@param ["https://tfhub.dev/google/universal-sentence-encoder/2", "https://tfhub.dev/google/universal-sentence-encoder-large/3"]
+import json
 
-# Import the Universal Sentence Encoder's TF Hub module
-embed = hub.Module(module_url)
+def update_analyisis():
+    module_url = "https://tfhub.dev/google/universal-sentence-encoder/2" #@param ["https://tfhub.dev/google/universal-sentence-encoder/2", "https://tfhub.dev/google/universal-sentence-encoder-large/3"]
 
-# Compute a representation for each message, showing various lengths supported.
-s1 = "Hey!, how much for the thingy"
-s2 = "That's way too much, I can only do 50"
-s3 = "Alright then, I'll do 55, but I'm not happy about it"
+    # Import the Universal Sentence Encoder's TF Hub module
+    embed = hub.Module(module_url)
 
-messages = [s1, s2, s3]
+    # Compute a representation for each message, showing various lengths supported.
+    s1 = "Hey!, how much for the thingy"
+    s2 = "That's way too much, I can only do 50"
+    s3 = "Alright then, I'll do 55, but I'm not happy about it"
 
-# Reduce logging output.
-tf.logging.set_verbosity(tf.logging.ERROR)
+    messages = [s1, s2, s3]
 
-with tf.Session() as session:
-    session.run([tf.global_variables_initializer(), tf.tables_initializer()])
-    message_embeddings = session.run(embed(messages))
-    print(message_embeddings)
+    # Reduce logging output.
+    tf.logging.set_verbosity(tf.logging.ERROR)
 
-    haggle_messages = ["That's way too much, I can only do 50", 
-                        "I'll give you 20 for it", 
-                        "I can only do 26",
-                        "Would 34 be enough for the bike?",
-                        "I can't go that high",
-                        "Come on man, cut me some slack",
-                        "There's no way it's worth that much"]
+    with tf.Session() as session:
+        session.run([tf.global_variables_initializer(), tf.tables_initializer()])
+        # message_embeddings = session.run(embed(messages))
+
+        # input_messages = tf.placeholder(dtype=tf.string, shape=[None])
+
+        haggle_messages = ["That's way too much, I can only do 50", 
+                            "I'll give you 20 for it", 
+                            "I can only do 26",
+                            "Would 34 be enough for the bike?",
+                            "I can't go that high",
+                            "Come on man, cut me some slack",
+                            "There's no way it's worth that much"
+                            "This is ridiculous",
+                            "Can you please go a little lower?",
+                            "I might be able to pay 70, but thats the most I can do"]
+        print("embedding training phrases")
+        haggle_embeddings = session.run(embed(messages))
+        print("training data generated")
+
+        # print(haggle_embeddings)
+        def attitude_score(embedding, attitude_embeddings):
+            max_score = 0
+            for attitude_embeddings in attitude_embeddings:
+                max_score = max(max_score, np.inner(embedding, attitude_embeddings))
+            return max_score
+
+        def haggle_score(text):
+            print("ERBGEBGEFSG", attitude_score(session.run(embed([text]))[0], haggle_embeddings))
 
 
-  # for i, message_embedding in enumerate(np.array(message_embeddings).tolist()):
-  #   print("Message: {}".format(messages[i]))
-  #   print("Embedding size: {}".format(len(message_embedding)))
-  #   message_embedding_snippet = ", ".join(
-  #       (str(x) for x in message_embedding[:3]))
-  #   print("Embedding: [{}, ...]\n".format(message_embedding_snippet))
+        objects = {}
+        embedded_objects = {}
+        scores = {}
+        with open('test_transcript.json', 'r') as fp:
+            objects = json.load(fp)
+        
+        print(objects)
+        for obj in objects.keys():
+            embedded_objects[obj] = session.run(embed(objects[obj]))
+        
+        print(embedded_objects)
+
+        for obj in objects.keys():
+            phrase_scores = [attitude_score(embedding, haggle_embeddings) for embedding in embedded_objects[obj]]
+            score = sum(phrase_scores) / len(phrase_scores)
+            suggestion = "lower the price" if score > .5 else "raise the price"
+            scores[obj] = {"sugesstion" : suggestion, "haggle_score" : score}
+        
+        print(scores)
+        with open('scores.json', 'w') as fp:
+            json.dump(scores, fp)
+        
+
+        # test_data = ["That's too low!", 
+        #             "I've got 45, will that work?", 
+        #             "Sure, that sounds good",
+        #             "I've had enough of this buffoonery",
+        #             "Actually, that's a fair price",
+        #             "Sounds good, where do I sign",
+        #             "What about the dog food"
+        #             "What time should I pick up?"]
+        
+        # test_embedded = session.run(embed(test_data))
+        
+        # haggle_score("There's no way I'm paying that")
+        # for i, embedding in enumerate(test_embedded):
+        #     print("SENTENCE: ", test_data[i], " HAGGLE SCORE: ", attitude_score(embedding, haggle_embeddings))
+
+update_analyisis()
