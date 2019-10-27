@@ -38,14 +38,13 @@ def barter():
     animal = body["animal"]
     person_id = body["id"]
 
-    os.getcwd()
     with open(os.getcwd() + "/app/transcript.json", "r") as f:
         transcript = json.loads(f.read())
     if animal not in transcript:
         transcript[animal] = []
     transcript[animal].append(text)
-    
-    with open("transcript.json", "w") as f:
+
+    with open(os.getcwd() + "/app/transcript.json", "w") as f:
         json.dump(transcript, f)
 
     response = {}
