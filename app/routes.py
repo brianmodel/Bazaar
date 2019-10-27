@@ -17,15 +17,24 @@ def hello():
 @app.route("/orders")
 def get_orders():
     orders = get_all_orders()
+    response = []
     for order in orders["orders"]:
         order_id = order["id"]
         date_created = order["dateCreated"]
-        customer = order["customer"]
+        customer = order["customer"]["name"]
 
         full_order = get_order(order_id)
         amount_paid = full_order["payments"][0]["amount"]
-        print(amount_paid)
-    return "success"
+        item = full_order["orderLines"][0]["productId"]["type"]
+        order_entry = {
+            "id": order_id,
+            "dateCreated": date_created,
+            "customerName": customer,
+            "amountPaid": amount_paid,
+            "item": item,
+        }
+        response.append(order_entry)
+    return json.dumps(response)
 
 
 @app.route("/analysis")
@@ -121,7 +130,6 @@ def barter():
         db.update({"y": [min_price, max_price]}, Animal.x == full_name)
     else:
         db.insert({"x": full_name, "y": [price, price]})
-    print(db.all())
 
     with open(os.getcwd() + "/app/analysis/transcript.json", "r") as f:
         transcript = json.loads(f.read())
