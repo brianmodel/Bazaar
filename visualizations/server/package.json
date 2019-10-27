@@ -1,0 +1,14 @@
+{
+  "name": "ass-server",
+  "version": "1.0.0",
+  "description": "Serve assort-support-ui",
+  "main": "app.js",
+  "scripts": {
+    "start": "serve -s build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serve": "^11.0.2"
+  }
+}
